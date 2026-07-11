@@ -1,4 +1,5 @@
 local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
+local Logic = loadstring(game:HttpGet("https://raw.githubusercontent.com/ndrael/NL-Hub/refs/heads/main/logic.lua"))()
 
 WindUI:AddTheme({
     Name = "Default",
@@ -86,7 +87,7 @@ local Button = EspTab:Button({
     Title = "Survivors",
     Locked = false,
     Callback = function()
-        -- ...
+        Logic.ESPSurvivors()
     end
 })
 
@@ -94,7 +95,7 @@ local Button = EspTab:Button({
     Title = "Killer",
     Locked = false,
     Callback = function()
-        -- ...
+        Logic.ESPKiller()
     end
 })
 
@@ -102,7 +103,7 @@ local Button = EspTab:Button({
     Title = "Spectator",
     Locked = false,
     Callback = function()
-        -- ...
+        Logic.ESPSpectator()
     end
 })
 
