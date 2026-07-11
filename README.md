@@ -10,15 +10,15 @@
 
 The script organizes features cleanly based on your in-game role and preferences:
 
-*   🏠 **Main:** Welcome page, script status, and essential updates.
-*   👁️ **ESP:** Visual enhancements to track players, objectives, or key entities.
-*   ♾️ **Auto:** Various automation toggles to speed up your progression.
-*   ⚔️ **Combat Section:**
-    *   🛡️ *Survivors:* Special utilities to help you survive, loop, and evade the threat.
-    *   🪓 *Killer:* Offensive enhancements to easily hunt down targets.
-*   🎁 **Event:** Dedicated modules tailored for active in-game events.
-*   🎛️ **Misc:** Extra global modifications and tweaks.
-*   ⚙️ **Settings:** Configuration options for UI customization and toggles.
+* 🏠 **Main:** Welcome page, script status, and essential updates.
+* 👁️ **ESP:** Visual enhancements to track players, objectives, or key entities.
+* ♾️ **Auto:** Various automation toggles to speed up your progression.
+* ⚔️ **Combat Section:**
+    * 🛡️ *Survivors:* Special utilities to help you survive, loop, and evade the threat.
+    * 🪓 *Killer:* Offensive enhancements to easily hunt down targets.
+* 🎁 **Event:** Dedicated modules tailored for active in-game events.
+* 🎛️ **Misc:** Extra global modifications and tweaks.
+* ⚙️ **Settings:** Configuration options for UI customization and toggles.
 
 ---
 
@@ -29,6 +29,18 @@ This script features universal support. You can execute it flawlessly on both Mo
 1. Launch **Violence District** on Roblox.
 2. Open your preferred executor (Delta, Codex, Wave, etc.).
 3. Copy and paste the official *loadstring* code below into your executor window:
-
-```lua
+```
 loadstring(game:HttpGet("[https://raw.githubusercontent.com/ndrael/NL-Hub/refs/heads/main/script.lua](https://raw.githubusercontent.com/ndrael/NL-Hub/refs/heads/main/script.lua)"))()
+```
+4. Press **Execute**. The custom **NL Hub** floating crown button will appear on your screen, ready for action!
+
+---
+
+## 🛠️ Technical Details
+
+- **UI Framework:** [WindUI](https://footagesus.github.io/WindUI-Docs/) (Latest Release).
+- **Theme:** Custom Dark-Gold (Exclusively crafted by `ndrael`).
+- **Mobile Friendly:** Features a fully draggable topbar/toggle button, making it extremely comfortable for Delta Mobile users.
+
+---
+⭐ *Enjoying the script? Drop a **Star** on this repository to support future updates!*
