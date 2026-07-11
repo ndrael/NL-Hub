@@ -30,7 +30,7 @@ This script features universal support. You can execute it flawlessly on both Mo
 2. Open your preferred executor (Delta, Codex, Wave, etc.).
 3. Copy and paste the official *loadstring* code below into your executor window:
 ```
-loadstring(game:HttpGet("[https://raw.githubusercontent.com/ndrael/NL-Hub/refs/heads/main/script.lua](https://raw.githubusercontent.com/ndrael/NL-Hub/refs/heads/main/script.lua)"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ndrael/NL-Hub/refs/heads/main/script.lua"))()
 ```
 4. Press **Execute**. The custom **NL Hub** floating crown button will appear on your screen, ready for action!
 
