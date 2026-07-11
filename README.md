@@ -1,46 +1,81 @@
-# NL Hub 👑 | Violence District Script
+# 👑 NL Hub
 
-**NL Hub** is a premium, lightweight, and free GUI script specially developed for the Roblox game **Violence District**. Powered by the modern **WindUI** framework, this script is highly optimized and universally compatible with **all executors** (Delta, Codex, Wave, Solara, etc.).
+Script GUI sederhana untuk game **Violence District** di Roblox.
 
-[![Version](https://img.shields.io/badge/Version-v1.0%20(Alpha)-gold?style=flat)](https://github.com/ndrael/NL-Hub) [![Executor](https://img.shields.io/badge/Executor-Universal%20Support-blue?style=flat)](https://github.com/ndrael/NL-Hub) [![UI](https://img.shields.io/badge/UI-WindUI-black?style=flat)](https://footagesus.github.io/WindUI-Docs/)
-
----
-
-## ✨ Features (Tabs & Sections)
-
-The script organizes features cleanly based on your in-game role and preferences:
-
-* 🏠 **Main:** Welcome page, script status, and essential updates.
-* 👁️ **ESP:** Visual enhancements to track players, objectives, or key entities.
-* ♾️ **Auto:** Various automation toggles to speed up your progression.
-* ⚔️ **Combat Section:**
-    * 🛡️ *Survivors:* Special utilities to help you survive, loop, and evade the threat.
-    * 🪓 *Killer:* Offensive enhancements to easily hunt down targets.
-* 🎁 **Event:** Dedicated modules tailored for active in-game events.
-* 🎛️ **Misc:** Extra global modifications and tweaks.
-* ⚙️ **Settings:** Configuration options for UI customization and toggles.
+> ⚠️ **Status:** Proyek ini masih dalam tahap **Alpha** dan masih dalam pengembangan. Beberapa fitur belum tersedia dan akan ditambahkan pada update berikutnya.
 
 ---
 
-## 📥 How to Use (Execution Guide)
+## 📖 Tentang
 
-This script features universal support. You can execute it flawlessly on both Mobile and PC executors.
+**NL Hub** adalah script GUI yang dibuat menggunakan **WindUI** dengan tampilan bertema **Dark Gold**.
 
-1. Launch **Violence District** on Roblox.
-2. Open your preferred executor (Delta, Codex, Wave, etc.).
-3. Copy and paste the official *loadstring* code below into your executor window:
+Project ini dibuat dengan fokus pada tampilan yang bersih, ringan, dan mudah digunakan di perangkat **Mobile** maupun **PC**.
+
+---
+
+## 🚧 Progress
+
+### Yang sudah selesai
+
+* ✅ Tampilan GUI
+* ✅ Tema Dark Gold
+* ✅ Floating Button
+* ✅ Struktur Tab
+* ✅ Struktur Combat Section
+
+### Sedang dikerjakan
+
+* ⏳ ESP
+* ⏳ Auto
+* ⏳ Combat
+* ⏳ Event
+* ⏳ Misc
+* ⏳ Settings
+
+---
+
+## 📂 Struktur Tab
+
+* 🏠 Main
+* 👁️ ESP
+* ♾️ Auto
+* ⚔️ Combat
+
+  * 🛡️ Survivors
+  * 🪓 Killer
+* 🎁 Event
+* 🎛️ Misc
+* ⚙️ Settings
+
+---
+
+## 📥 Cara Menggunakan
+
+Jalankan script berikut menggunakan executor Roblox.
+
+```lua
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ndrael/NL-Hub/main/script.lua"))()
 ```
-loadstring(game:HttpGet("https://raw.githubusercontent.com/ndrael/NL-Hub/refs/heads/main/script.lua"))()
-```
-4. Press **Execute**. The custom **NL Hub** floating crown button will appear on your screen, ready for action!
 
 ---
 
-## 🛠️ Technical Details
+## 🛠️ Dibuat Menggunakan
 
-- **UI Framework:** [WindUI](https://footagesus.github.io/WindUI-Docs/) (Latest Release).
-- **Theme:** Custom Dark-Gold (Exclusively crafted by `ndrael`).
-- **Mobile Friendly:** Features a fully draggable topbar/toggle button, making it extremely comfortable for Delta Mobile users.
+* WindUI
+* Lua
+* Roblox
 
 ---
-⭐ *Enjoying the script? Drop a **Star** on this repository to support future updates!*
+
+## 📌 Catatan
+
+Karena project ini masih dalam tahap **Alpha**, kemungkinan masih terdapat bug dan perubahan fitur sewaktu-waktu.
+
+---
+
+## ❤️ Developer
+
+**ndrael**
+
+Terima kasih sudah mengunjungi repository ini.
