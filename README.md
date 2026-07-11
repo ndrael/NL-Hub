@@ -1,12 +1,8 @@
 # NL Hub 👑 | Violence District Script
 
-**NL Hub** is a premium, lightweight, and free GUI script specially developed for the Roblox game **Violence District**. Powered by the modern **WindUI** framework, this script is highly optimized and universally compatible with **all executors** (Delta, Codex, Vega X, Wave, Solara, etc.).
+**NL Hub** is a premium, lightweight, and free GUI script specially developed for the Roblox game **Violence District**. Powered by the modern **WindUI** framework, this script is highly optimized and universally compatible with **all executors** (Delta, Codex, Wave, Solara, etc.).
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Version-v1.0%20(Alpha)-gold?style=for-the-badge">
-  <img src="https://img.shields.io/badge/Executor-Universal%20Support-blue?style=for-the-badge">
-  <img src="https://img.shields.io/badge/UI-WindUI-black?style=for-the-badge">
-</p>
+![Version](https://img.shields.io/badge/Version-v1.0%20(Alpha)-gold?style=flat) ![Executor](https://img.shields.io/badge/Executor-Universal%20Support-blue?style=flat) ![UI](https://img.shields.io/badge/UI-WindUI-black?style=flat)
 
 ---
 
