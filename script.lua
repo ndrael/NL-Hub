@@ -1,4 +1,5 @@
 local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
+local Logic = loadstring(game:HttpGet("https://raw.githubusercontent.com/ndrael/NL-Hub/refs/heads/main/logic.lua"))()
 
 WindUI:AddTheme({
     Name = "Default",
@@ -82,27 +83,27 @@ local Section = EspTab:Section({
     Title = "Player Esp",
 })
 
-local Button = EspTab:Button({
+local Toggle = EspTab:Toggle({
     Title = "Survivors",
-    Locked = false,
-    Callback = function()
-        -- ...
+    Value = false,
+    Callback = function(state)
+        Logic.ESPSurvivors()
     end
 })
 
-local Button = EspTab:Button({
+local Toggle = EspTab:Toggle({
     Title = "Killer",
-    Locked = false,
-    Callback = function()
-        -- ...
+    Value = false,
+    Callback = function(state)
+        Logic.ESPKiller()
     end
 })
 
-local Button = EspTab:Button({
+local Toggle = EspTab:Toggle({
     Title = "Spectator",
-    Locked = false,
-    Callback = function()
-        -- ...
+    Value = false,
+    Callback = function(state)
+        Logic.ESPSpectator()
     end
 })
 
@@ -110,34 +111,34 @@ local Section = EspTab:Section({
     Title = "Object Esp",
 })
 
-local Button = EspTab:Button({
+local Toggle = EspTab:Toggle({
     Title = "Generator",
-    Locked = false,
-    Callback = function()
+    Value = false,
+    Callback = function(state)
         -- ...
     end
 })
 
-local Button = EspTab:Button({
+local Toggle = EspTab:Toggle({
     Title = "Pallet",
-    Locked = false,
-    Callback = function()
+    Value = false,
+    Callback = function(state)
         -- ...
     end
 })
 
-local Button = EspTab:Button({
+local Toggle = EspTab:Toggle({
     Title = "Hook",
-    Locked = false,
-    Callback = function()
+    Value = false,
+    Callback = function(state)
         -- ...
     end
 })
 
-local Button = EspTab:Button({
+local Toggle = EspTab:Toggle({
     Title = "Exit Gate",
-    Locked = false,
-    Callback = function()
+    Value = false,
+    Callback = function(state)
         -- ...
     end
 })
