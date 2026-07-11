@@ -78,6 +78,70 @@ local EspTab = Window:Tab({
     Locked = false,
 })
 
+local Section = EspTab:Section({ 
+    Title = "Player Esp",
+})
+
+local Button = EspTab:Button({
+    Title = "Survivors",
+    Locked = false,
+    Callback = function()
+        -- ...
+    end
+})
+
+local Button = EspTab:Button({
+    Title = "Killer",
+    Locked = false,
+    Callback = function()
+        -- ...
+    end
+})
+
+local Button = EspTab:Button({
+    Title = "Spectator",
+    Locked = false,
+    Callback = function()
+        -- ...
+    end
+})
+
+local Section = EspTab:Section({ 
+    Title = "Object Esp",
+})
+
+local Button = EspTab:Button({
+    Title = "Generator",
+    Locked = false,
+    Callback = function()
+        -- ...
+    end
+})
+
+local Button = EspTab:Button({
+    Title = "Pallet",
+    Locked = false,
+    Callback = function()
+        -- ...
+    end
+})
+
+local Button = EspTab:Button({
+    Title = "Hook",
+    Locked = false,
+    Callback = function()
+        -- ...
+    end
+})
+
+local Button = EspTab:Button({
+    Title = "Exit Gate",
+    Locked = false,
+    Callback = function()
+        -- ...
+    end
+})
+
 local AutoTab = Window:Tab({
     Title = "Auto",
     Icon = "infinity",
