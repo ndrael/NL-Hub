@@ -43,9 +43,9 @@ WindUI:AddTheme({
 })
 
 local Window = WindUI:CreateWindow({
-    Title = "My Super Hub",
-    Icon = "door-open",
-    Author = "by .ftgs and .ftgs",
+    Title = "NL Hub",
+    Icon = "crown",
+    Author = "by ndrael",
     Theme = "Default"
 })
 
@@ -59,3 +59,64 @@ Window:EditOpenButton({
     Enabled = true,
     Draggable = true,
 })
+
+Window:Tag({
+    Title = "v1.0 (Alpha)",
+    Color = Color3.fromHex("#FFD700"),
+    Radius = 13,
+})
+
+local MainTab = Window:Tab({
+    Title = "Main",
+    Icon = "house",
+    Locked = false,
+})
+
+local EspTab = Window:Tab({
+    Title = "Esp",
+    Icon = "eye",
+    Locked = false,
+})
+
+local AutoTab = Window:Tab({
+    Title = "Auto",
+    Icon = "infinity",
+    Locked = false,
+})
+
+local CombatSection = Window:Section({
+    Title = "Combat",
+    Icon = "swords",
+})
+
+local SurvivorsTab = CombatSection:Tab({
+    Title = "Survivors",
+    Icon = "shield",
+    Locked = false,
+})
+
+local KillerTab = CombatSection:Tab({
+    Title = "Killer",
+    Icon = "axe",
+    Locked = false,
+})
+
+local EventTab = Window:Tab({
+    Title = "Event",
+    Icon = "gift",
+    Locked = false,
+})
+
+local MiscTab = Window:Tab({
+    Title = "Misc",
+    Icon = "sliders-horizontal",
+    Locked = false,
+})
+
+local SettingsTab = Window:Tab({
+    Title = "Settings",
+    Icon = "settings",
+    Locked = false,
+})
+
+MainTab:Select()
