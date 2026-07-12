@@ -101,29 +101,13 @@ local function CreateBodyHighlight(character, teamName)
 end
 
 -- Function untuk create ESP text
-local function CreateESPText(player, teamName)
-    local character = player.Character
-    if not character then return nil end
-    
-    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
-    if not humanoidRootPart then return nil end
-    
-    -- Color per team
-    local teamColors = {
-        Survivors = Color3.fromRGB(0, 100, 255),      -- Blue
-        Killer = Color3.fromRGB(255, 0, 0),           -- Red
-        Spectator = Color3.fromRGB(200, 200, 200),    -- Gray/White
-    }
-    
-    local textColor = teamColors[teamName] or Color3.fromRGB(255, 255, 255)
-    
-    -- Create drawing
+local function CreateESPText()
     local drawing = Drawing.new("Text")
-    drawing.Size = 18
-    drawing.Color = textColor
+    drawing.Size = 24  -- Naikin dari 18 jadi 24
     drawing.Outline = true
     drawing.OutlineColor = Color3.fromRGB(0, 0, 0)
-    drawing.Font = 2
+    drawing.OutlineSize = 2
+    drawing.Font = Drawing.Fonts.Monospace
     drawing.Visible = true
     
     return drawing
@@ -160,16 +144,25 @@ local espLoop = game:GetService("RunService").RenderStepped:Connect(function()
                             CreateBodyHighlight(character, roleName)
                             
                             -- Create text
-                            local drawing = CreateESPText(player, roleName)
+                            local drawing = CreateESPText()
                             if drawing then
+                                -- Set color sesuai role
+                                local teamColors = {
+                                    Survivors = Color3.fromRGB(0, 100, 255),      -- Blue
+                                    Killer = Color3.fromRGB(255, 0, 0),           -- Red
+                                    Spectator = Color3.fromRGB(200, 200, 200),    -- Gray/White
+                                }
+                                drawing.Color = teamColors[roleName] or Color3.fromRGB(255, 255, 255)
+                                
                                 -- Format text: Username ([Distance])
                                 drawing.Text = player.Name .. " ([" .. math.floor(distance) .. "])"
                                 
                                 -- Get screen position (di atas kepala)
-                                local screenPos, onScreen = camera:WorldToScreenPoint(humanoidRootPart.Position + Vector3.new(0, 3, 0))
+                                local screenPos, onScreen = camera:WorldToScreenPoint(humanoidRootPart.Position + Vector3.new(0, 3.5, 0))
                                 
                                 if onScreen then
                                     drawing.Position = Vector2.new(screenPos.X, screenPos.Y)
+                                    drawing.Visible = true
                                 else
                                     drawing.Visible = false
                                 end
