@@ -13,20 +13,52 @@ local ESPEnabled = {
 local ESPDrawings = {}
 local ESPHighlights = {}
 
--- Function untuk get team dari player
-local function GetPlayerTeam(player)
-    if player:FindFirstChild("Team") then
-        local team = player.Team
-        if team then
-            if team.Name == "Survivors" then
-                return "Survivors"
-            elseif team.Name == "Killer" then
-                return "Killer"
-            elseif team.Name == "Spectator" then
-                return "Spectator"
-            end
+-- Function untuk get role dari player (try multiple methods)
+local function GetPlayerRole(player)
+    if not player or not player.Character then return nil end
+    
+    local character = player.Character
+    
+    -- Method 1: Check player.Team
+    if player.Team then
+        local teamName = player.Team.Name
+        if teamName == "Survivors" then return "Survivors"
+        elseif teamName == "Killer" then return "Killer"
+        elseif teamName == "Spectator" then return "Spectator"
         end
     end
+    
+    -- Method 2: Check character Humanoid Team
+    local humanoid = character:FindFirstChild("Humanoid")
+    if humanoid and humanoid.Team then
+        local teamName = humanoid.Team.Name
+        if teamName == "Survivors" then return "Survivors"
+        elseif teamName == "Killer" then return "Killer"
+        elseif teamName == "Spectator" then return "Spectator"
+        end
+    end
+    
+    -- Method 3: Check custom Role value di character
+    local roleValue = character:FindFirstChild("Role")
+    if roleValue and roleValue:IsA("StringValue") then
+        local roleName = roleValue.Value
+        if roleName == "Survivors" then return "Survivors"
+        elseif roleName == "Killer" then return "Killer"
+        elseif roleName == "Spectator" then return "Spectator"
+        end
+    end
+    
+    -- Method 4: Check custom attribute
+    local success, roleAttr = pcall(function()
+        return character:GetAttribute("Role")
+    end)
+    if success and roleAttr then
+        if roleAttr == "Survivors" then return "Survivors"
+        elseif roleAttr == "Killer" then return "Killer"
+        elseif roleAttr == "Spectator" then return "Spectator"
+        end
+    end
+    
     return nil
 end
 
@@ -97,9 +129,11 @@ local function CreateESPText(player, teamName)
     return drawing
 end
 
--- Function untuk update ESP
-local function UpdateESP()
+-- Main ESP Loop - Realtime update
+local espLoop = game:GetService("RunService").RenderStepped:Connect(function()
     local localPlayer = game.Players.LocalPlayer
+    if not localPlayer or not localPlayer.Character then return end
+    
     local camera = workspace.CurrentCamera
     
     -- Clear old drawings
@@ -111,150 +145,64 @@ local function UpdateESP()
     -- Loop semua players
     for _, player in pairs(game.Players:GetPlayers()) do
         if player ~= localPlayer then
-            local teamName = GetPlayerTeam(player)
+            local roleName = GetPlayerRole(player)
             
-            -- Check apakah ESP untuk team ini aktif
-            if ESPEnabled[teamName] then
+            if roleName then
                 local character = player.Character
                 if character then
                     local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
                     if humanoidRootPart then
-                        local distance = GetDistance(localPlayer, player)
-                        
-                        -- Create body highlight
-                        CreateBodyHighlight(character, teamName)
-                        
-                        -- Create text
-                        local drawing = CreateESPText(player, teamName)
-                        if drawing then
-                            -- Format text: Username ([Distance])
-                            drawing.Text = player.Name .. " ([" .. math.floor(distance) .. "])"
+                        -- Check apakah ESP untuk role ini aktif
+                        if ESPEnabled[roleName] then
+                            local distance = GetDistance(localPlayer, player)
                             
-                            -- Get screen position (di atas kepala)
-                            local screenPos, onScreen = camera:WorldToScreenPoint(humanoidRootPart.Position + Vector3.new(0, 3, 0))
+                            -- Create body highlight
+                            CreateBodyHighlight(character, roleName)
                             
-                            if onScreen then
-                                drawing.Position = Vector2.new(screenPos.X, screenPos.Y)
-                            else
-                                drawing.Visible = false
+                            -- Create text
+                            local drawing = CreateESPText(player, roleName)
+                            if drawing then
+                                -- Format text: Username ([Distance])
+                                drawing.Text = player.Name .. " ([" .. math.floor(distance) .. "])"
+                                
+                                -- Get screen position (di atas kepala)
+                                local screenPos, onScreen = camera:WorldToScreenPoint(humanoidRootPart.Position + Vector3.new(0, 3, 0))
+                                
+                                if onScreen then
+                                    drawing.Position = Vector2.new(screenPos.X, screenPos.Y)
+                                else
+                                    drawing.Visible = false
+                                end
+                                
+                                table.insert(ESPDrawings, drawing)
                             end
-                            
-                            table.insert(ESPDrawings, drawing)
+                        else
+                            -- Remove highlight jika ESP dioff
+                            local highlight = character:FindFirstChild("ESPHighlight")
+                            if highlight then
+                                highlight:Destroy()
+                            end
                         end
-                    end
-                end
-            else
-                -- Remove highlight jika ESP dioff
-                local character = player.Character
-                if character then
-                    local highlight = character:FindFirstChild("ESPHighlight")
-                    if highlight then
-                        highlight:Destroy()
                     end
                 end
             end
         end
     end
-end
+end)
 
 -- Function untuk toggle ESP Survivors
 function Logic.ESPSurvivors()
     ESPEnabled.Survivors = not ESPEnabled.Survivors
-    
-    if ESPEnabled.Survivors then
-        -- Start ESP loop
-        local espLoop
-        espLoop = game:GetService("RunService").RenderStepped:Connect(function()
-            if ESPEnabled.Survivors then
-                UpdateESP()
-            else
-                espLoop:Disconnect()
-            end
-        end)
-    else
-        -- Clear all drawings dan highlights
-        for _, drawing in pairs(ESPDrawings) do
-            drawing:Remove()
-        end
-        ESPDrawings = {}
-        
-        for _, player in pairs(game.Players:GetPlayers()) do
-            local character = player.Character
-            if character then
-                local highlight = character:FindFirstChild("ESPHighlight")
-                if highlight then
-                    highlight:Destroy()
-                end
-            end
-        end
-    end
 end
 
 -- Function untuk toggle ESP Killer
 function Logic.ESPKiller()
     ESPEnabled.Killer = not ESPEnabled.Killer
-    
-    if ESPEnabled.Killer then
-        -- Start ESP loop
-        local espLoop
-        espLoop = game:GetService("RunService").RenderStepped:Connect(function()
-            if ESPEnabled.Killer then
-                UpdateESP()
-            else
-                espLoop:Disconnect()
-            end
-        end)
-    else
-        -- Clear all drawings dan highlights
-        for _, drawing in pairs(ESPDrawings) do
-            drawing:Remove()
-        end
-        ESPDrawings = {}
-        
-        for _, player in pairs(game.Players:GetPlayers()) do
-            local character = player.Character
-            if character then
-                local highlight = character:FindFirstChild("ESPHighlight")
-                if highlight then
-                    highlight:Destroy()
-                end
-            end
-        end
-    end
 end
 
 -- Function untuk toggle ESP Spectator
 function Logic.ESPSpectator()
     ESPEnabled.Spectator = not ESPEnabled.Spectator
-    
-    if ESPEnabled.Spectator then
-        -- Start ESP loop
-        local espLoop
-        espLoop = game:GetService("RunService").RenderStepped:Connect(function()
-            if ESPEnabled.Spectator then
-                UpdateESP()
-            else
-                espLoop:Disconnect()
-            end
-        end)
-    else
-        -- Clear all drawings dan highlights
-        for _, drawing in pairs(ESPDrawings) do
-            drawing:Remove()
-        end
-        ESPDrawings = {}
-        
-        for _, player in pairs(game.Players:GetPlayers()) do
-            local character = player.Character
-            if character then
-                local highlight = character:FindFirstChild("ESPHighlight")
-                if highlight then
-                    highlight:Destroy()
-                end
-            end
-        end
-    end
 end
 
 return Logic
-
