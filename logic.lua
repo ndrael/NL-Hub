@@ -10,8 +10,7 @@ local ESPEnabled = {
     Spectator = false,
 }
 
-local ESPDrawings = {}
-local ESPHighlights = {}
+local ESPTextDrawings = {}  -- key: player, value: Drawing.Text (persist, update in-place)
 
 -- Function untuk get role dari player (try multiple methods)
 local function GetPlayerRole(player)
@@ -103,11 +102,12 @@ end
 -- Function untuk create ESP text
 local function CreateESPText()
     local drawing = Drawing.new("Text")
-    drawing.Size = 24  -- Naikin dari 18 jadi 24
+    drawing.Size = 20
+    drawing.Center = true
     drawing.Outline = true
     drawing.OutlineColor = Color3.fromRGB(0, 0, 0)
-    drawing.OutlineSize = 2
-    drawing.Font = Drawing.Fonts.Monospace
+    drawing.Font = 2
+    drawing.Color = Color3.fromRGB(255, 255, 255)
     drawing.Visible = true
     
     return drawing
@@ -119,12 +119,6 @@ local espLoop = game:GetService("RunService").RenderStepped:Connect(function()
     if not localPlayer or not localPlayer.Character then return end
     
     local camera = workspace.CurrentCamera
-    
-    -- Clear old drawings
-    for _, drawing in pairs(ESPDrawings) do
-        drawing:Remove()
-    end
-    ESPDrawings = {}
     
     -- Loop semua players
     for _, player in pairs(game.Players:GetPlayers()) do
@@ -138,14 +132,19 @@ local espLoop = game:GetService("RunService").RenderStepped:Connect(function()
                     if humanoidRootPart then
                         -- Check apakah ESP untuk role ini aktif
                         if ESPEnabled[roleName] then
-                            local distance = GetDistance(localPlayer, player)
-                            
-                            -- Create body highlight
-                            CreateBodyHighlight(character, roleName)
-                            
-                            -- Create text
-                            local drawing = CreateESPText()
-                            if drawing then
+                            pcall(function()
+                                local distance = GetDistance(localPlayer, player)
+                                
+                                -- Create body highlight (cuma sekali, reused)
+                                CreateBodyHighlight(character, roleName)
+                                
+                                -- Ambil drawing yang udah ada, atau bikin baru kalo belum ada
+                                local drawing = ESPTextDrawings[player]
+                                if not drawing then
+                                    drawing = CreateESPText()
+                                    ESPTextDrawings[player] = drawing
+                                end
+                                
                                 -- Set color sesuai role
                                 local teamColors = {
                                     Survivors = Color3.fromRGB(0, 100, 255),      -- Blue
@@ -154,10 +153,16 @@ local espLoop = game:GetService("RunService").RenderStepped:Connect(function()
                                 }
                                 drawing.Color = teamColors[roleName] or Color3.fromRGB(255, 255, 255)
                                 
-                                -- Format text: Username ([Distance])
+                                -- Format text: Username ([Distance]) -- update in-place
                                 drawing.Text = player.Name .. " ([" .. math.floor(distance) .. "])"
                                 
-                                -- Get screen position (di atas kepala)
+                                -- Auto-scale size berdasarkan distance (makin jauh makin kecil)
+                                local maxDistance = 150
+                                local minSize = 10
+                                local maxSize = 22
+                                drawing.Size = math.clamp(maxSize - (distance / maxDistance) * (maxSize - minSize), minSize, maxSize)
+                                
+                                -- Get screen position (di atas kepala) -- update in-place
                                 local screenPos, onScreen = camera:WorldToScreenPoint(humanoidRootPart.Position + Vector3.new(0, 3.5, 0))
                                 
                                 if onScreen then
@@ -166,19 +171,29 @@ local espLoop = game:GetService("RunService").RenderStepped:Connect(function()
                                 else
                                     drawing.Visible = false
                                 end
-                                
-                                table.insert(ESPDrawings, drawing)
-                            end
+                            end)
                         else
-                            -- Remove highlight jika ESP dioff
+                            -- ESP role ini dimatiin -> bersihin highlight + text punya player ini
                             local highlight = character:FindFirstChild("ESPHighlight")
                             if highlight then
                                 highlight:Destroy()
+                            end
+                            if ESPTextDrawings[player] then
+                                ESPTextDrawings[player]:Remove()
+                                ESPTextDrawings[player] = nil
                             end
                         end
                     end
                 end
             end
+        end
+    end
+    
+    -- Cleanup drawing punya player yang udah keluar/respawn tanpa character
+    for p, drawing in pairs(ESPTextDrawings) do
+        if not p.Parent or not p.Character then
+            drawing:Remove()
+            ESPTextDrawings[p] = nil
         end
     end
 end)
