@@ -153,8 +153,8 @@ local espLoop = game:GetService("RunService").RenderStepped:Connect(function()
                                 }
                                 drawing.Color = teamColors[roleName] or Color3.fromRGB(255, 255, 255)
                                 
-                                -- Format text: Username ([Distance]) -- update in-place
-                                drawing.Text = player.Name .. " ([" .. math.floor(distance) .. "])"
+                                -- Format text: Username (Distance) -- update in-place
+                                drawing.Text = player.Name .. " (" .. math.floor(distance) .. ")"
                                 
                                 -- Auto-scale size berdasarkan distance (makin jauh makin kecil)
                                 local maxDistance = 150
